@@ -12,9 +12,27 @@ class ServiceList(APIView):
 
     def post(self, request):
         request.data['host'] = request.META['REMOTE_ADDR']
+        service = None
         serializer = ServiceSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            service = serializer.save()
+            routes = request.data['routes']
+            for route in routes:
+                Route.objects.update_or_create(service=service, path=route['path'])
             return Response(status=201)
-        print(serializer.errors)
         return Response(status=400)
+
+class ServiceDetail(APIView):
+    def get(self, request):
+        path = request.GET.get('path', None)
+        if not path:
+            return Response(status=400)
+        if path[0] == '/':
+            path = path[1:]
+        try:
+            route = Route.objects.get(path=path)
+            service = route.service
+            serializer = ServiceSerializer(service)
+            return Response(serializer.data)
+        except Route.DoesNotExist:
+            return Response(status=404)

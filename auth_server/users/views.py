@@ -10,11 +10,13 @@ from .models import *
 
 class UserSignup(APIView):
     def post(self, request):
+        print(request.data)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.validated_data['password'] = make_password(serializer.validated_data['password'])
             serializer.save()
             return Response(status=201)
+        print(serializer.errors)
         return Response(status=400)
 
 class UserSignin(APIView):

@@ -6,5 +6,5 @@ class Service(models.Model):
     port = models.IntegerField()
 
 class Route(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE,)
     path = models.CharField(max_length=255,)
