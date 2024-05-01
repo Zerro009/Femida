@@ -1,7 +1,7 @@
 import os from 'os'
 import express from 'express'
 
-import { scannerRouter } from './scanner/router.js'
+import { scannerRouter } from './scanner/routers.js'
 
 const app = express()
 const PORT = 8004
