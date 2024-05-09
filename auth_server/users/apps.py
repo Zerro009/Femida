@@ -20,4 +20,7 @@ class UsersConfig(AppConfig):
                 'path': route[0][0][0],
             })
 
-        req = r.post(url, json=service)
+        try:
+            req = r.post(url, json=service)
+        except Exception as err:
+            print('Can\'t connect to registry server!')
