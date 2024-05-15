@@ -1,0 +1,23 @@
+.header {
+	display: flex;
+	gap: 10px;
+
+	width: 100vw;
+	height: fit-content;
+
+	background: #444;
+}
+
+.wrapperFlag {
+	width: 80px;
+	height: 40px;
+}
+
+.wrapperButtons {
+	display: flex;
+	gap: 10px;
+
+	width: fit-content;
+
+	background: red;
+}

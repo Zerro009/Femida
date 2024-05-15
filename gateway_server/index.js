@@ -2,7 +2,7 @@ import express from 'express'
 import axios from 'axios'
 
 const app = express()
-const PORT = 8000
+const PORT = 8001
 
 const registry_server = 'http://192.168.199.9:8001/'
 
