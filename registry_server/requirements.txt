@@ -1,0 +1,9 @@
+django
+djangorestframework
+django-cors-headers
+gunicorn
+requests
+djoser
+fastapi
+uvicorn
+psutil

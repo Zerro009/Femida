@@ -14,7 +14,7 @@ class UsersConfig(AppConfig):
             'routes':   [],
         }
         routes = get_resolver().reverse_dict.values()
-        url = 'http://192.168.199.9:8001/services/'
+        url = 'http://localhost:8001/services/'
         for route in routes:
             service['routes'].append({
                 'path': route[0][0][0],

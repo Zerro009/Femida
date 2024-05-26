@@ -10,11 +10,16 @@ router.add_api_route(
 )
 
 router.add_api_route(
-    path='/tcp/scan/',
-    endpoint=tcp_scan_view
+    path='/port/',
+    endpoint=port_scan_view
 )
 
 router.add_api_route(
-    path='/os/scan/',
+    path='/service/',
+    endpoint=service_detect_view
+)
+
+router.add_api_route(
+    path='/os/',
     endpoint=os_scan_view
 )

@@ -14,13 +14,12 @@ class HostDetection:
         try:
             pkt = IP(dst=ipv4) / ICMP()
             ans = sr1(pkt, timeout=2, verbose=False)
-            print('%s - %s' % (ipv4, ans))
             if ans:
                 hosts.append(Host(ipv4))
         except Exception as e:
             return None
 
-    def ping(self):
+    def run(self):
         hosts = []
         threads = []
         pkt = IP(dst=self.ipv4) / ICMP()

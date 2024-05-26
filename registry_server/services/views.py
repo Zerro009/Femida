@@ -25,10 +25,10 @@ class ServiceList(APIView):
 class ServiceDetail(APIView):
     def get(self, request):
         path = request.GET.get('path', None)
+        for i in Route.objects.all():
+            print(i.path)
         if not path:
             return Response(status=400)
-        if path[0] == '/':
-            path = path[1:]
         try:
             route = Route.objects.get(path=path)
             service = route.service

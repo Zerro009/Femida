@@ -1,10 +1,16 @@
+import dotenv from 'dotenv'
 import express from 'express'
 import axios from 'axios'
 
-const app = express()
-const PORT = 8001
+dotenv.config()
 
-const registry_server = 'http://192.168.199.9:8001/'
+const app = express()
+
+const PROD = process.env.PROD
+const PORT = PROD ? process.env.PORT : 8000
+const registry_server = PROD ?
+	`http://${process.env.REGISTRY_SERVER_HOST}:${process.env.REGISTRY_SERVER_PORT}/` :
+	`http://localhost:8001/`
 
 app.use(express.json())
 app.use(express.urlencoded({
@@ -13,6 +19,7 @@ app.use(express.urlencoded({
 
 app.use(async (req, res, next) => {
 	const path = req.path
+
 	let service = {}
 
 	try {
@@ -32,19 +39,16 @@ app.use(async (req, res, next) => {
 	}
   
 	const url = `http://${service.host}:${service.port}${path}`
-  
 	try {
-		console.log(req.body)
-
 		const response = await axios({
 			url:		url,
 			method:		req.method,
-			params:		req.params,
+			params:		req.query,
 			data:		req.body,
 		})
 		res.status(response.status).send(response.data)
 	} catch (err) {
-		res.status(404).send('Not found')
+		res.status(404)
 	}
 })
 

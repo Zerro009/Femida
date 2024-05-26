@@ -1,0 +1,42 @@
+services:
+  gateway_server:
+    build: ./gateway_server
+    environment:
+      - PORT=8000
+      - REGISTRY_SERVER_HOST=172.16.0.11
+      - REGISTRY_SERVER_PORT=8000
+    ports:
+      - "8000:8000"
+    networks:
+      backend:
+        ipv4_address: 172.16.0.10
+      default:
+  registry_server:
+    build: ./registry_server
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - PORT=8000
+    ports:
+      - "8000:8000"
+    networks:
+      backend:
+        ipv4_address: 172.16.0.11
+  network_server:
+    build: ./network_server
+    environment:
+      - PORT=8000
+      - REGISTRY_SERVER_HOST=172.16.0.11
+      - REGISTRY_SERVER_PORT=8000
+    ports:
+      - "8000:8000"
+    networks:
+      backend:
+        ipv4_address: 172.16.0.12
+networks:
+  backend:
+    driver: bridge
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
